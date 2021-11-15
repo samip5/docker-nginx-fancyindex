@@ -1,8 +1,8 @@
-FROM lsiobase/alpine:3.11
+FROM lsiobase/alpine:3.13
 
 LABEL maintainer="Skyler <sm+docker@samip.fi>"
 
-ENV NGINX_VERSION 1.16.1
+ENV NGINX_VERSION 1.21.4
 
 COPY ngx-fancyindex /ngx-fancyindex
 
@@ -144,11 +144,11 @@ RUN CONFIG="\
 RUN echo "**** configure nginx ****" && \
 echo 'fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> \
         /etc/nginx/fastcgi_params && \
-rm -f /etc/nginx/conf.d/default.conf && \
-echo "**** fix logrotate ****" && \
-sed -i "s#/var/log/messages {}.*# #g" /etc/logrotate.conf && \
-sed -i 's#/usr/sbin/logrotate /etc/logrotate.conf#/usr/sbin/logrotate /etc/logrotate.conf -s /config/log/logrotate.status#g' \
-        /etc/periodic/daily/logrotate
+rm -f /etc/nginx/http.d/default.conf && \
+cho "**** fix logrotate ****" && \
+  sed -i "s#/var/log/messages {}.*# #g" /etc/logrotate.conf && \
+  sed -i 's#/usr/sbin/logrotate /etc/logrotate.conf#/usr/sbin/logrotate /etc/logrotate.conf -s /config/log/logrotate.status#g' \
+    /etc/periodic/daily/logrotate
 
 
 # add local files
